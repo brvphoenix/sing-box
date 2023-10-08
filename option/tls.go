@@ -94,6 +94,7 @@ type OutboundECHOptions struct {
 	DynamicRecordSizingDisabled bool             `json:"dynamic_record_sizing_disabled,omitempty"`
 	Config                      Listable[string] `json:"config,omitempty"`
 	ConfigPath                  string           `json:"config_path,omitempty"`
+	OutterServer                string           `json:"outter_server,omitempty"`
 }
 
 type OutboundUTLSOptions struct {
