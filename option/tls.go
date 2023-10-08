@@ -91,11 +91,12 @@ type InboundECHOptions struct {
 }
 
 type OutboundECHOptions struct {
-	Enabled                     bool                       `json:"enabled,omitempty"`
-	PQSignatureSchemesEnabled   bool                       `json:"pq_signature_schemes_enabled,omitempty"`
-	DynamicRecordSizingDisabled bool                       `json:"dynamic_record_sizing_disabled,omitempty"`
+	Enabled                     bool             `json:"enabled,omitempty"`
+	PQSignatureSchemesEnabled   bool             `json:"pq_signature_schemes_enabled,omitempty"`
+	DynamicRecordSizingDisabled bool             `json:"dynamic_record_sizing_disabled,omitempty"`
 	Config                      badoption.Listable[string] `json:"config,omitempty"`
-	ConfigPath                  string                     `json:"config_path,omitempty"`
+	ConfigPath                  string           `json:"config_path,omitempty"`
+	OutterServer                string           `json:"outter_server,omitempty"`
 }
 
 type OutboundUTLSOptions struct {

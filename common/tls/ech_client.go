@@ -196,20 +196,26 @@ func NewECHClient(ctx context.Context, serverAddress string, options option.Outb
 		}
 		tlsConfig.ClientECHConfigs = echConfigs
 	} else {
-		tlsConfig.GetClientECHConfigs = fetchECHClientConfig(ctx)
+		tlsConfig.GetClientECHConfigs = fetchECHClientConfig(ctx, options)
 	}
 	return &echClientConfig{&tlsConfig}, nil
 }
 
-func fetchECHClientConfig(ctx context.Context) func(_ context.Context, serverName string) ([]cftls.ECHConfig, error) {
+func fetchECHClientConfig(ctx context.Context, options option.OutboundTLSOptions) func(_ context.Context, serverName string) ([]cftls.ECHConfig, error) {
 	return func(_ context.Context, serverName string) ([]cftls.ECHConfig, error) {
+		var outterServer string
+		if options.ECH.OutterServer == "" {
+			outterServer = serverName
+		} else {
+			outterServer = options.ECH.OutterServer
+		}
 		message := &mDNS.Msg{
 			MsgHdr: mDNS.MsgHdr{
 				RecursionDesired: true,
 			},
 			Question: []mDNS.Question{
 				{
-					Name:   serverName + ".",
+					Name:   mDNS.Fqdn(outterServer),
 					Qtype:  mDNS.TypeHTTPS,
 					Qclass: mDNS.ClassINET,
 				},
